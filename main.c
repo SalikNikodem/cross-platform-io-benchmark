@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// #if defined(__linux__)
-// #elif defined(_WIN32) || defined(__APPLE__)
-// #endif
-
 #define DEFAULT_OUTPUT "data.log"
 #define BUFFER_SIZE_LINE 2048
 #define BUFFER_SIZE_BLOCK 4096
@@ -30,10 +26,5 @@ void print_output_file_content(const char *filename, FILE *out_file) {
 }
 
 int main(int argc, char *argv[]) {
-
-    // #if defined(__linux__)
-    // #else
-    // #endif
-
     return EXIT_SUCCESS;
 }

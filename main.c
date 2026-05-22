@@ -38,6 +38,15 @@ int main(int argc, char *argv[]) {
             return EXIT_FAILURE;
         }
 
+        
+    char *mode = argv[1];
+    char *in1_name = argv[2];
+    char *in2_name = argv[3];
+    char *out_name = (argc == 5) ? argv[4] : DEFAULT_OUTPUT;
+
+    FILE *in1 = NULL;
+    FILE *in2 = NULL;
+    FILE *out = NULL;
 
 
 

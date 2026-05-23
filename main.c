@@ -14,23 +14,10 @@
 #define BUFFER_SIZE_BLOCK 4096
 
 
-int process_by_char(FILE *in_file, FILE *out_screen, FILE *out_file) {
-    return EXIT_SUCCESS;
-}
-
-
-int process_by_line(FILE *in_file, FILE *out_screen, FILE *out_file) {
-    return EXIT_SUCCESS;
-}
-
-
-int process_by_block(FILE *in_file, FILE *out_screen, FILE *out_file) {
-    return EXIT_SUCCESS;
-}
-
-
-void print_output_file_content(const char *filename, FILE *out_file) {
-}
+int process_by_char(FILE *in_file, FILE *out_screen, FILE *out_file);
+int process_by_line(FILE *in_file, FILE *out_screen, FILE *out_file);
+int process_by_block(FILE *in_file, FILE *out_screen, FILE *out_file);
+void print_output_file_content(const char *filename, FILE *out_file);
 
 int main(int argc, char *argv[]) {
     if (argc < 4 || argc > 5) {
@@ -49,6 +36,48 @@ int main(int argc, char *argv[]) {
     FILE *out = NULL;
 
 
+
+    return EXIT_SUCCESS;
+}
+
+int process_by_char(FILE *in_file, FILE *out_screen, FILE *out_file) {
+    int c;
+
+    while ((c = fgetc(in_file)) != EOF) {
+        fputc(c, out_screen);
+        fputc(c, out_file);
+    }
+
+    if (ferror(in_file)) {
+        fprintf(stderr, "Błąd: Wystąpił problem podczas odczytu pliku (char mode).\n");
+        return EXIT_FAILURE;
+    }
+    
+    if (!feof(in_file)) {
+        fprintf(stderr, "Błąd: Pętla zakończyła się przed dotarciem do końca pliku.\n");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+int process_by_line(FILE *in_file, FILE *out_screen, FILE *out_file) {
+    char buf[BUFFER_SIZE_LINE];
+
+    while (fgets(buf, sizeof(buf), in_file) != NULL) {
+        fputs(buf, out_screen);
+        fputs(buf, out_file); 
+    }
+
+    if (ferror(in_file)) {
+        fprintf(stderr, "Błąd: Wystąpił problem podczas odczytu pliku (line mode).\n");
+        return EXIT_FAILURE;
+    }
+
+    if (!feof(in_file)) {
+        fprintf(stderr, "Błąd: Pętla zakończyła się przed dotarciem do końca pliku.\n");
+        return EXIT_FAILURE;
+    }
 
     return EXIT_SUCCESS;
 }

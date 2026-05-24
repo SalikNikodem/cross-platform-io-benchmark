@@ -81,3 +81,37 @@ int process_by_line(FILE *in_file, FILE *out_screen, FILE *out_file) {
 
     return EXIT_SUCCESS;
 }
+int process_by_block(FILE *in_file, FILE *out_screen, FILE *out_file) {
+    char buf[BUFFER_SIZE_BLOCK];
+    size_t bytes_read;
+
+    while ((bytes_read = fread(buf, sizeof(char), BUFFER_SIZE_BLOCK, in_file)) > 0) {
+        fwrite(buf, sizeof(char), bytes_read, out_screen);
+        fwrite(buf, sizeof(char), bytes_read, out_file);
+    }
+
+    if (ferror(in_file)) {
+        fprintf(stderr, "Błąd: Wystąpił problem podczas odczytu pliku (block mode).\n");
+        return EXIT_FAILURE;
+    }
+
+    if (!feof(in_file)) {
+        fprintf(stderr, "Błąd: Pętla zakończyła się przed dotarciem do końca pliku.\n");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
+}
+
+void print_output_file_content(const char *filename, FILE *out_file) {
+    int c;
+    rewind(out_file);
+
+    printf("%s:\n", filename);
+
+
+    while ((c = fgetc(out_file)) != EOF) {
+        fputc(c, stdout);
+    }
+    printf("\n");
+}

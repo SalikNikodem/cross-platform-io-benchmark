@@ -1,10 +1,13 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+
 #define DEFAULT_OUTPUT "data.log"
 #define BUFFER_SIZE_BLOCK 4096
-#define BUFFER_SIZE_LINE LINE_MAX
+#define BUFFER_SIZE_LINE 8192
 
 
 int process_by_char(FILE *in_file, FILE *out_file);
